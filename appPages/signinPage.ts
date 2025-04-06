@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 
 export class SignInPage {
     readonly page: Page;
@@ -6,12 +6,11 @@ export class SignInPage {
     readonly passwordInput: Locator;
     readonly submitButton: Locator;
     private baseUrl: string;
+    private getElemetByType: (type: string) => Locator;
 
     constructor(page: Page, baseUrl: string = process.env.BASE_URL || '') {
         this.page = page;
-        this.emailInput = page.locator('[type="email"]');
-        this.passwordInput = page.locator('[type="password"]');
-        this.submitButton = page.locator('[type="submit"]');
+        this.getElemetByType = (type: string) => page.locator(`[type="${type}"]`);
         this.baseUrl = baseUrl;
     }
 
@@ -20,15 +19,15 @@ export class SignInPage {
     }
 
     private async fillEmail(email: string) {
-        await this.emailInput.fill(email);
+        await this.getElemetByType("email").fill(email);
     }
 
     private async fillPassword(password: string) {
-        await this.passwordInput.fill(password);
+        await this.getElemetByType("password").fill(password);
     }
 
     private async submitForm() {
-        await this.submitButton.click();
+        await this.getElemetByType("submit").click();
     }
 
     async signIn(email: string, password: string) {

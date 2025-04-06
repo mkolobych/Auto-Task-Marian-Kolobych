@@ -16,38 +16,32 @@ type MyFixtures = {
 };
 
 export const test = base.extend<MyFixtures>({
-    // Створення SignInPage
     signInPage: async ({ page }, use) => {
         const signInPage = new SignInPage(page);
         await use(signInPage);
     },
 
-    // Створення MainPage, передаючи creds
     mainPage: async ({ page, signInPage, creds }, use) => {
         await signInPage.signIn(creds.email, creds.password);
         const mainPage = new MainPage(page);
         await use(mainPage);
     },
 
-    // Створення SettingsPage
     settingsPage: async ({ page }, use) => {
         const settingsPage = new SettingsPage(page);
         await use(settingsPage);
     },
 
-    // Генерація унікального імені для групи
     groupName: async ({ }, use) => {
         const groupName = generateUniqueName('Test Group');
         await use(groupName);
     },
 
-    // Генерація скрипту
     scriptText: async ({ }, use) => {
         const scriptText = generateUniqueName('Script');
         await use(scriptText);
     },
 
-    // Фікстура для creds
     creds: async ({ }, use) => {
         const credentials = { email: creds.email, password: creds.password };
         await use(credentials);

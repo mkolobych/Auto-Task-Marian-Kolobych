@@ -1,7 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
-import { SignInPage } from '../appPages/signinPage';
 import { MainPage } from '../appPages/mainPage';
-import { generateUniqueName } from '../utils/generators';
 
 export class SettingsPage {
     readonly page: Page;
@@ -12,17 +10,18 @@ export class SettingsPage {
     readonly confirmDelete: Locator;
     readonly successPopUp: Locator;
     readonly closeSuccessButton: Locator;
-    readonly groupContainer: (groupName: string) => Locator;
-    readonly editButtonForGroup: (groupName: string) => Locator;
+    private getElemetByType: (type: string) => Locator;
+    private groupContainer: (groupName: string) => Locator;
+    private editButtonForGroup: (groupName: string) => Locator;
 
     constructor(page: Page) {
         this.addGroupButton = page.locator('[data-testid="AddIcon"]');
-        this.newGroupTitleInput = page.locator('[type="text"]');
         this.scriptInput = page.locator('[class="_textarea_nr5ea_1"]');
         this.deleteButton = page.locator(`//*[text()="Delete"]`);
         this.confirmDelete = page.locator('[class*="css-r1shct"]');
         this.successPopUp = page.locator('//*[text()="Success"]');
         this.closeSuccessButton = page.locator('#close');
+        this.getElemetByType = (type: string) => page.locator(`[type="${type}"]`);
 
         this.groupContainer = (groupName: string) =>
             page.locator('.css-hbj1al', { hasText: groupName });
@@ -31,12 +30,11 @@ export class SettingsPage {
             this.groupContainer(groupName).locator('[data-testid="MoreHorizIcon"]');
     }
 
-    async createGroup(page: Page, title: string, script: string) {
-        const signIn = new SignInPage(page);
+    async createGroup(title: string, script: string) {
         await this.addGroupButton.click();
-        await this.newGroupTitleInput.fill(title);
+        await this.getElemetByType("text").fill(title);
         await this.scriptInput.first().fill(script);
-        await signIn.submitButton.click();
+        await this.getElemetByType("submit").click();
     }
 
     async deleteChatByName(page: Page, groupName: string) {

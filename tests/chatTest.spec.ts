@@ -5,7 +5,7 @@ test('CRM-001-User can sign in and create a script group in AstroCRM', async ({
     page, signInPage, mainPage, settingsPage, groupName, scriptText }) => {
     await signInPage.signIn(creds.email, creds.password);
     await mainPage.goToSettings();
-    await settingsPage.createGroup(page, groupName, scriptText);
+    await settingsPage.createGroup(groupName, scriptText);
     await mainPage.gotoGhats();
     await mainPage.selectLastCreatedChat();
 
