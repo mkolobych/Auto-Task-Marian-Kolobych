@@ -13,12 +13,16 @@ Before running the tests, ensure you have the following installed on your machin
 ### Clone the Repository
 Clone the repository to your local machine using the following command:
 
-gh repo clone mkolobych/Auto-Task-Marian-Kolobych
+git repo clone mkolobych/Auto-Task-Marian-Kolobych
 
-### scripts to run tests
-"test": "playwright test",
-"test:headed": "playwright test --headed",
-"test:headless": "playwright test --headless",
-"test:retry": "playwright test --retries=2",
+### Scripts to run tests
+"test": "playwright test"
+
+"test:headed": "playwright test --headed"
+
+"test:headless": "playwright test --headless"
+
+"test:retry": "playwright test --retries=2"
+
 "test:report": "playwright show-report"
 
