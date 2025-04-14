@@ -37,7 +37,7 @@ export class MainPage {
         return this.chatTemplate;
     }
 
-    async areAllGroupButtonsDisabled(): Promise<boolean[]> {
+    async areAllGroupButtonsDisabled() {
         const buttons = this.getGroupTemplate().locator('button');
         const count = await buttons.count();
         const results: boolean[] = [];
